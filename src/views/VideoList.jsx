@@ -1,4 +1,4 @@
-import logo from "../logo.svg";
+import logo from "../assets/img/yt_logo_rgb_light.png";
 import "../App.scss";
 
 function VideoList() {
