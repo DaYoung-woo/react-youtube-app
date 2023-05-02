@@ -1,7 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .App-header {
   border-bottom: 1px solid #ddd;
   max-height: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
   img {
-    max-height: 48px;
+    max-height: 24px;
+  }
+  .search-input {
+    height: 24px;
+    width: 300px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
