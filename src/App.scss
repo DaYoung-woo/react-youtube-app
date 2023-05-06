@@ -20,3 +20,33 @@
     line-height: 1.25rem;
   }
 }
+
+.AppBody {
+  padding: 20px 50px;
+  margin: 0 auto;
+  width: 100vw;
+  overflow-y: scroll;
+  height: calc(100vh - 48px);
+}
+
+.VideoList {
+  .VideoItem {
+    img {
+      width: 100%;
+    }
+    .VideoTitle {
+      width: 100%;
+      h4 {
+        max-height: 50px;
+        overflow: hidden;
+        word-wrap: break-word;
+        font-weight: 500;
+        font-size: 1rem;
+        margin-bottom: 2px;
+      }
+      h6 {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
