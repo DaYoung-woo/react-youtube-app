@@ -1,11 +1,9 @@
+import "../assets/style/dark.scss";
 import "../App.scss";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 //import { api } from "../assets/axios";
 const dayjs = require("dayjs");
-
-// function loadVideo(param) {
-//   return api.getList(param);
-// }
 
 function calculateDate(date) {
   if (dayjs(date).diff(dayjs(), "year") < 0) {
@@ -24,17 +22,19 @@ function calculateDate(date) {
 }
 function VideoList() {
   const [videoList, setVideoList] = useState([]);
+  const { theme } = useTheme();
 
   useEffect(() => {
-    //   const param = {
-    //     part: "snippet",
-    //     chart: "mostPopular",
-    //     key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
-    //     maxResults: 20,
-    //   };
-    //   loadVideo(param).then(({ data }) => {
-    //     setVideoList(data.items);
-    //   });
+    // const param = {
+    //   part: "snippet",
+    //   chart: "mostPopular",
+    //   key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
+    //   maxResults: 20,
+    //   regionCode: "kr",
+    // };
+    // api.getList(param).then(({ data }) => {
+    //   setVideoList(data.items);
+    // });
 
     fetch(`data/video.json`)
       .then((res) => res.json())
@@ -44,7 +44,7 @@ function VideoList() {
   }, []);
 
   return (
-    <div className="AppBody">
+    <div className={`AppBody ${theme}`}>
       <div className="VideoList inline-grid grid-cols-3 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 gap-4">
         {videoList.map((el) => (
           <div className="VideoItem row-span-2" key={el.id}>

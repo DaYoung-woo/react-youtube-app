@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.App-header {
+.AppHeader {
   border-bottom: 1px solid #ddd;
   max-height: 48px;
   min-height: 48px;
@@ -33,19 +33,23 @@
   .VideoItem {
     img {
       width: 100%;
+      border-radius: 0.5rem;
     }
     .VideoTitle {
       width: 100%;
+      padding-top: 8px;
       h4 {
         max-height: 50px;
         overflow: hidden;
         word-wrap: break-word;
         font-weight: 500;
-        font-size: 1rem;
-        margin-bottom: 2px;
+        font-size: 1.02rem;
+        margin-bottom: 4px;
       }
       h6 {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+        color: #52525b;
+        line-height: 1.1rem;
       }
     }
   }
