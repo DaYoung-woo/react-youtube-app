@@ -1,25 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logoLight from "../assets/img/yt_logo_rgb_light.png";
 import logoDark from "../assets/img/yt_logo_rgb_dark.png";
 import { useTheme } from "../context/ThemeContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 export default function VideoList() {
   const { theme, toggleTheme } = useTheme();
-  const [searchKeyword, setSearchKeyword] = useState("");
   const { keyword } = useParams();
-
+  const [searchKeyword, setSearchKeyword] = useState(keyword);
+  const navigate = useNavigate();
   const submitForm = (e) => {
     e.preventDefault();
-    window.location.href = `/${searchKeyword}`;
+    navigate(`/${searchKeyword}`);
   };
 
   const changeKeyword = (e) => {
     setSearchKeyword(e.target.value);
   };
-
-  useEffect(() => {
-    setSearchKeyword(keyword);
-  }, []);
 
   return (
     <header className={`AppHeader ${theme}`}>

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import VideoList from "../views/VideoList";
+import VideoDetail from "../views/VideoDetail";
 import App from "../App";
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <VideoList />,
+      },
+      {
+        path: "detail/:id",
+        element: <VideoDetail />,
       },
     ],
   },

@@ -22,6 +22,11 @@ function calculateDate(date) {
   }
 }
 
+function goDetail(e, id) {
+  e.preventDefault();
+  window.location.href = `/detail/${id}`;
+}
+
 function VideoList() {
   const [videoList, setVideoList] = useState([]);
   const { theme } = useTheme();
@@ -52,13 +57,17 @@ function VideoList() {
         setVideoList(data.items);
       });
     }
-  }, []);
+  }, [keyword]);
 
   return (
     <div className={`AppBody ${theme}`}>
       <div className="VideoList inline-grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  gap-4">
         {videoList.map((el) => (
-          <div className="VideoItem row-span-2" key={el.id}>
+          <div
+            className="VideoItem row-span-2"
+            key={el.id}
+            onClick={(e) => goDetail(e, el.id)}
+          >
             <img
               src={el.snippet.thumbnails.medium.url}
               alt={el.snippet.title}
