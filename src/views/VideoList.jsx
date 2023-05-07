@@ -3,7 +3,7 @@ import "../App.scss";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { api } from "../assets/axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 const dayjs = require("dayjs");
 
 function calculateDate(date) {
@@ -22,15 +22,16 @@ function calculateDate(date) {
   }
 }
 
-function goDetail(e, id) {
-  e.preventDefault();
-  window.location.href = `/detail/${id}`;
-}
-
 function VideoList() {
   const [videoList, setVideoList] = useState([]);
   const { theme } = useTheme();
   const { keyword } = useParams();
+  const navigate = useNavigate();
+
+  function goDetail(e, id) {
+    e.preventDefault();
+    navigate(`/detail/${id}`);
+  }
 
   useEffect(() => {
     if (keyword) {
@@ -65,8 +66,8 @@ function VideoList() {
         {videoList.map((el) => (
           <div
             className="VideoItem row-span-2"
-            key={el.id}
-            onClick={(e) => goDetail(e, el.id)}
+            key={keyword ? el.id.videoId : el.id}
+            onClick={(e) => goDetail(e, keyword ? el.id.videoId : el.id)}
           >
             <img
               src={el.snippet.thumbnails.medium.url}

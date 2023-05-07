@@ -10,7 +10,7 @@ export default function VideoList() {
   const navigate = useNavigate();
   const submitForm = (e) => {
     e.preventDefault();
-    navigate(`/${searchKeyword}`);
+    //navigate(`/${searchKeyword}`);
   };
 
   const changeKeyword = (e) => {
@@ -19,7 +19,14 @@ export default function VideoList() {
 
   return (
     <header className={`AppHeader ${theme}`}>
-      <img src={theme === "dark" ? logoDark : logoLight} alt="logo" />
+      <img
+        src={theme === "dark" ? logoDark : logoLight}
+        alt="logo"
+        onClick={(e) => {
+          setSearchKeyword(``);
+          navigate(``);
+        }}
+      />
       <form onSubmit={submitForm}>
         <div className="flex">
           <input
