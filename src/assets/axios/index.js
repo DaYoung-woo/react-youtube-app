@@ -18,4 +18,7 @@ export const api = {
   getList: (param) => {
     return instance.get(`/videos${makeUrlParam(param)}`);
   },
+  searchList: (param) => {
+    return instance.get(`/search${makeUrlParam(param)}`);
+  },
 };

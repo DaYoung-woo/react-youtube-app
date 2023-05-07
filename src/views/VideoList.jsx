@@ -2,7 +2,8 @@ import "../assets/style/dark.scss";
 import "../App.scss";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-//import { api } from "../assets/axios";
+import { api } from "../assets/axios";
+import { useParams } from "react-router-dom";
 const dayjs = require("dayjs");
 
 function calculateDate(date) {
@@ -20,32 +21,42 @@ function calculateDate(date) {
     return `${dayjs(date).diff(dayjs(), "second") * -1}초 전`;
   }
 }
+
 function VideoList() {
   const [videoList, setVideoList] = useState([]);
   const { theme } = useTheme();
+  const { keyword } = useParams();
 
   useEffect(() => {
-    // const param = {
-    //   part: "snippet",
-    //   chart: "mostPopular",
-    //   key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
-    //   maxResults: 20,
-    //   regionCode: "kr",
-    // };
-    // api.getList(param).then(({ data }) => {
-    //   setVideoList(data.items);
-    // });
-
-    fetch(`data/video.json`)
-      .then((res) => res.json())
-      .then((data) => {
-        setVideoList(data);
+    if (keyword) {
+      const param = {
+        part: "snippet",
+        type: "video",
+        key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
+        maxResults: 20,
+        regionCode: "kr",
+        q: keyword,
+      };
+      api.searchList(param).then(({ data }) => {
+        setVideoList(data.items);
       });
+    } else {
+      const param = {
+        part: "snippet",
+        chart: "mostPopular",
+        key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
+        maxResults: 20,
+        regionCode: "kr",
+      };
+      api.getList(param).then(({ data }) => {
+        setVideoList(data.items);
+      });
+    }
   }, []);
 
   return (
     <div className={`AppBody ${theme}`}>
-      <div className="VideoList inline-grid grid-cols-3 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 gap-4">
+      <div className="VideoList inline-grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  gap-4">
         {videoList.map((el) => (
           <div className="VideoItem row-span-2" key={el.id}>
             <img
