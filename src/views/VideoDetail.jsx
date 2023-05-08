@@ -41,16 +41,24 @@ function VideoDetail() {
       <div className="basis-full md:basis-2/3">
         <iframe title={id} id={id} type="text/html"  src={`https://www.youtube.com/embed/${id}`} frameBorder="0" allowFullScreen ></iframe>
 
-        <div>
+        <div class="VideoTitle">
         {video.map(el => el.snippet.title)}
         </div>
-        
+
         {
           channel.map(el => {
             return(
-              <div className="flex" key={el.id}>
-                <img src={el.snippet.thumbnails.default.url} alt="channelthumb" maxWidth="50px" />
-                <span>{el.snippet.title}</span>
+              <div key={el.id}>
+                <div className="flex items-center" >
+                  <img src={el.snippet.thumbnails.default.url} alt="channelthumb" maxWidth="50px" />
+                  <p>{el.snippet.title}</p>
+                </div>
+                
+                <div class={`desc ${theme}`}>
+                  {video.map(el => {
+                    return( <div key={el.snippet.description} dangerouslySetInnerHTML={{__html: el.snippet.description.split('\n').join('<br/>')}}></div> )
+                  })}
+                </div>
               </div>
             )
           })

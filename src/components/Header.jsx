@@ -32,7 +32,7 @@ export default function VideoList() {
           <input
             type="text"
             placeholder="검색"
-            className={`pl-3 border h-9 w-72 rounded-l-2xl border-slate-300 focus:outline-none focus:border-sky-700`}
+            className={`pl-3 border h-9 w-60 rounded-l-2xl border-slate-300 focus:outline-none focus:border-sky-700`}
             value={searchKeyword}
             onChange={changeKeyword}
           />

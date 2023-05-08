@@ -59,6 +59,32 @@
     width: 100%;
     aspect-ratio: 16 / 9; 
   }
+  .VideoTitle{
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding-bottom: 10px;
+    margin-top: 10px;
+  }
+  img{
+    width: 40px;
+    height: 40px;
+    border-radius: 10rem;
+    margin-right: 10px;
+  }
+  span{
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .desc{
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .desc.dark{
+    background-color: rgb(55 65 81);
+  }
 }
 
 
