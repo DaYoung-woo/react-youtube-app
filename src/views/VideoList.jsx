@@ -28,9 +28,10 @@ function VideoList() {
   const { keyword } = useParams();
   const navigate = useNavigate();
 
-  function goDetail(e, id) {
+  function goDetail(e, id, channelId) {
     e.preventDefault();
-    navigate(`/detail/${id}`);
+    console.log(channelId)
+    navigate(`/detail/${id}/${channelId}`);
   }
 
   useEffect(() => {
@@ -62,12 +63,12 @@ function VideoList() {
 
   return (
     <div className={`AppBody ${theme}`}>
-      <div className="VideoList inline-grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  gap-4">
+      <div className="VideoList inline-grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {videoList.map((el) => (
           <div
             className="VideoItem row-span-2"
             key={keyword ? el.id.videoId : el.id}
-            onClick={(e) => goDetail(e, keyword ? el.id.videoId : el.id)}
+            onClick={(e) => goDetail(e, keyword ? el.id.videoId : el.id, keyword ? el.id.channelId : el.snippet.channelId)}
           >
             <img
               src={el.snippet.thumbnails.medium.url}

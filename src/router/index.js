@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
         element: <VideoList />,
       },
       {
-        path: "detail/:id",
+        path: "detail/:id/:channelId",
         element: <VideoDetail />,
       },
     ],

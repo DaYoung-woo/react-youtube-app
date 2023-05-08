@@ -16,7 +16,7 @@
 }
 
 .AppBody {
-  padding: 20px 50px;
+  padding: 20px 20px;
   margin: 0 auto;
   width: 100vw;
   overflow-y: scroll;
@@ -26,6 +26,7 @@
 
 .VideoList {
   max-width: 1500px;
+  padding: 0px 30px;
   margin: 0 auto;
   .VideoItem {
     img {
@@ -51,6 +52,15 @@
     }
   }
 }
+
+.VideoDetail{
+  width: 100%;
+  iframe{
+    width: 100%;
+    aspect-ratio: 16 / 9; 
+  }
+}
+
 
 ::-webkit-scrollbar {
   width: 4px; /* 스크롤바의 너비 */

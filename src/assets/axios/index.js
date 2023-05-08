@@ -27,4 +27,7 @@ export const api = {
   getCommentList: (param) => {
     return instance.get(`/commentThreads/${makeUrlParam(param)}`);
   },
+  getChannelList: (param) => {
+    return instance.get(`/channels/${makeUrlParam(param)}`);
+  }
 };
