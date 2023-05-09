@@ -21,13 +21,10 @@ export const api = {
   searchList: (param) => {
     return instance.get(`/search${makeUrlParam(param)}`);
   },
-  getDetail: (param) => {
-    return instance.get(`/search${makeUrlParam(param)}`);
-  },
   getCommentList: (param) => {
     return instance.get(`/commentThreads/${makeUrlParam(param)}`);
   },
   getChannelList: (param) => {
     return instance.get(`/channels/${makeUrlParam(param)}`);
-  }
+  },
 };

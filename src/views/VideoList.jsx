@@ -3,7 +3,8 @@ import "../App.scss";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { api } from "../assets/axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
+
 const dayjs = require("dayjs");
 
 function calculateDate(date) {
@@ -25,12 +26,10 @@ function calculateDate(date) {
 function VideoList() {
   const [videoList, setVideoList] = useState([]);
   const { theme } = useTheme();
-  const { keyword } = useParams();
   const navigate = useNavigate();
-
+  const { keyword } = useOutletContext();
   function goDetail(e, id, channelId) {
     e.preventDefault();
-    console.log(channelId)
     navigate(`/detail/${id}/${channelId}`);
   }
 
@@ -45,7 +44,19 @@ function VideoList() {
         q: keyword,
       };
       api.searchList(param).then(({ data }) => {
-        setVideoList(data.items);
+        console.log(data.items);
+        setVideoList(
+          data.items.map((el) => {
+            return {
+              id: el.id.videoId,
+              channelId: el.snippet.channelId,
+              url: el.snippet.thumbnails.medium.url,
+              title: el.snippet.title,
+              channelTitle: el.snippet.channelTitle,
+              publishedAt: calculateDate(el.snippet.publishedAt),
+            };
+          })
+        );
       });
     } else {
       const param = {
@@ -56,7 +67,18 @@ function VideoList() {
         regionCode: "kr",
       };
       api.getList(param).then(({ data }) => {
-        setVideoList(data.items);
+        setVideoList(
+          data.items.map((el) => {
+            return {
+              id: el.id,
+              channelId: el.snippet.channelId,
+              url: el.snippet.thumbnails.medium.url,
+              title: el.snippet.title,
+              channelTitle: el.snippet.channelTitle,
+              publishedAt: calculateDate(el.snippet.publishedAt),
+            };
+          })
+        );
       });
     }
   }, [keyword]);
@@ -67,17 +89,15 @@ function VideoList() {
         {videoList.map((el) => (
           <div
             className="VideoItem row-span-2"
-            key={keyword ? el.id.videoId : el.id}
-            onClick={(e) => goDetail(e, keyword ? el.id.videoId : el.id, keyword ? el.id.channelId : el.snippet.channelId)}
+            key={el.id}
+            onClick={(e) => goDetail(e, el.id, el.channelId)}
           >
-            <img
-              src={el.snippet.thumbnails.medium.url}
-              alt={el.snippet.title}
-            />
+            <img src={el.url} alt={el.title} />
             <div className="VideoTitle">
-              <h4>{el.snippet.title}</h4>
-              <h6>{el.snippet.channelTitle}</h6>
-              <h6>{calculateDate(el.snippet.publishedAt)}</h6>
+              {el.id}
+              <h4>{el.title}</h4>
+              <h6>{el.channelTitle}</h6>
+              <h6>{el.publishedAt}</h6>
             </div>
           </div>
         ))}
