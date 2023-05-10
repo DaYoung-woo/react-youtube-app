@@ -20,9 +20,12 @@ export default function VideoList({ keyword, setAppKeyword }) {
     setSearchKeyword(e.target.value);
   };
 
-  useEffect(() => {
-    if (keyword === searchKeyword) return;
-    setSearchKeyword(() => keyword);
+  const changeSearchKeyword = (item) => {
+    setSearchKeyword(() => item);
+  }
+  
+  useEffect(() => {    
+    changeSearchKeyword(keyword)
   }, [keyword]);
 
   return (

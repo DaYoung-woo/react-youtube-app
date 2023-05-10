@@ -1,6 +1,6 @@
 import "../assets/style/dark.scss";
 import "../App.scss";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { api } from "../assets/axios";
 import { useNavigate, useOutletContext } from "react-router-dom";
@@ -16,54 +16,55 @@ function VideoList() {
     navigate(`/detail/${id}/${channelId}`);
   }
 
+  const setBasicVideoList = useCallback(async () => {
+    const param = {
+      part: "snippet",
+      chart: "mostPopular",
+      key: process.env.REACT_APP_YOUTUBE_KEY,
+      maxResults: 20,
+      regionCode: "kr",
+    };
+    const res = await api.getList(param)
+    const list = res.data.items.map((el) => {
+      return {
+        id: el.id,
+        channelId: el.snippet.channelId,
+        url: el.snippet.thumbnails.medium.url,
+        title: el.snippet.title,
+        channelTitle: el.snippet.channelTitle,
+        publishedAt: el.snippet.publishedAt,
+      };
+    })
+    setVideoList(list);
+  }, []);
+
+  const setSearchVideoList = useCallback(async () => {
+    const param = {
+      part: "snippet",
+      type: "video",
+      key: process.env.REACT_APP_YOUTUBE_KEY,
+      maxResults: 20,
+      regionCode: "kr",
+      q: keyword,
+    };
+    const res = await api.searchList(param)
+    const list = res.data.items.map((el) => {
+      return {
+        id: el.id.videoId,
+        channelId: el.snippet.channelId,
+        url: el.snippet.thumbnails.medium.url,
+        title: el.snippet.title,
+        channelTitle: el.snippet.channelTitle,
+        publishedAt: el.snippet.publishedAt,
+      };
+    })
+    setVideoList(list);
+  }, [keyword])
+
   useEffect(() => {
-    if (keyword) {
-      const param = {
-        part: "snippet",
-        type: "video",
-        key: process.env.REACT_APP_YOUTUBE_KEY,
-        maxResults: 20,
-        regionCode: "kr",
-        q: keyword,
-      };
-      api.searchList(param).then(({ data }) => {
-        setVideoList(
-          data.items.map((el) => {
-            return {
-              id: el.id.videoId,
-              channelId: el.snippet.channelId,
-              url: el.snippet.thumbnails.medium.url,
-              title: el.snippet.title,
-              channelTitle: el.snippet.channelTitle,
-              publishedAt: calculateDate(el.snippet.publishedAt),
-            };
-          })
-        );
-      });
-    } else {
-      const param = {
-        part: "snippet",
-        chart: "mostPopular",
-        key: process.env.REACT_APP_YOUTUBE_KEY,
-        maxResults: 20,
-        regionCode: "kr",
-      };
-      api.getList(param).then(({ data }) => {
-        setVideoList(
-          data.items.map((el) => {
-            return {
-              id: el.id,
-              channelId: el.snippet.channelId,
-              url: el.snippet.thumbnails.medium.url,
-              title: el.snippet.title,
-              channelTitle: el.snippet.channelTitle,
-              publishedAt: calculateDate(el.snippet.publishedAt),
-            };
-          })
-        );
-      });
-    }
-  }, [keyword]);
+    if (keyword) setSearchVideoList()
+    else setBasicVideoList()
+  }, [keyword, setBasicVideoList, setSearchVideoList]);
 
   return (
     <div className={`AppBody ${theme}`}>
@@ -78,7 +79,7 @@ function VideoList() {
             <div className="VideoTitle">
               <h4>{el.title}</h4>
               <h6>{el.channelTitle}</h6>
-              <h6>{el.publishedAt}</h6>
+              <h6>{calculateDate(el.publishedAt)}</h6>
             </div>
           </div>
         ))}
