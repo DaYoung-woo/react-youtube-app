@@ -33,23 +33,27 @@
       width: 100%;
       border-radius: 0.5rem;
     }
-    .VideoTitle {
-      width: 100%;
-      padding-top: 8px;
-      h4 {
-        max-height: 50px;
-        overflow: hidden;
-        word-wrap: break-word;
-        font-weight: 500;
-        font-size: 1.02rem;
-        margin-bottom: 4px;
-      }
-      h6 {
-        font-size: 0.9rem;
-        color: #52525b;
-        line-height: 1.1rem;
-      }
-    }
+  }
+}
+
+.VideoTitle {
+  width: 100%;
+  padding-top: 8px;
+  h4 {
+    max-height: 50px;
+    overflow: hidden;
+    word-wrap: break-word;
+    font-weight: 500;
+    font-size: 1.02rem;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  h6 {
+    font-size: 0.9rem;
+    color: #52525b;
+    line-height: 1.1rem;
   }
 }
 
@@ -89,16 +93,32 @@
 
 .RecomendList {
   width: 100%;
-  height: 150px;
-  display: flex;
-  padding: 10px;
-  img {
-    border-radius: 1rem;
-    width: 60%;
-    max-width: 200px;
-    height: 100%;
-    margin-right: 0;
-  }
+  padding-bottom: 10px;
+  padding: 0px 10px;
+    li{
+      padding-bottom: 10px;
+      height: 120px;
+      display: flex;
+      img {
+        border-radius: 1rem;
+        width: 100%;
+        max-width: 200px;
+        height: 100%;
+        object-fit: cover;
+      }
+      .RecomendDetail{
+        width: calc(100% - 200px);
+        margin-top: 0;
+        padding: 0;
+        h6{
+          font-weight: 400;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          overflow: hidden;
+        }
+      }
+    }
 }
 
 ::-webkit-scrollbar {

@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../assets/axios/index";
 import { useTheme } from "../context/ThemeContext";
-import { useParams } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
 
 function VideoDetail() {
-  const { id, channelId } = useParams();
-  const { theme } = useTheme();
+  
   const [video, setVideo] = useState([]);
   const [recomendList, setRecomendList] = useState([]);
   const [channel, setChannel] = useState([]);
+  const { calculateDate } = useOutletContext();
+  const { id, channelId } = useParams();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const param = {
       part: "snippet",
       id,
-      key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
+      key: process.env.REACT_APP_YOUTUBE_KEY,
       maxResults: 20,
       regionCode: "kr",
     };
@@ -24,7 +26,7 @@ function VideoDetail() {
     const param2 = {
       part: "snippet",
       relatedToVideoId: id,
-      key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
+      key: process.env.REACT_APP_YOUTUBE_KEY,
       maxResults: 20,
       type: "video",
     };
@@ -37,7 +39,7 @@ function VideoDetail() {
     const param = {
       part: "snippet",
       id: channelId,
-      key: "AIzaSyACXoQ22yt8rGf9jcPqiLktxpcwPoMMyME",
+      key: process.env.REACT_APP_YOUTUBE_KEY,
       maxResults: 20,
       regionCode: "kr",
     };
@@ -66,9 +68,9 @@ function VideoDetail() {
           {channel.map((el) => {
             return (
               <div key={el.id}>
-                <div className="flex items-center">
+                <div className="flex items-center mb-1">
                   <img
-                    src={el.snippet.thumbnails.default.url}
+                    src={el.snippet.thumbnails.high.url}
                     alt="channelthumb"
                     maxwidth="50px"
                   />
@@ -93,17 +95,24 @@ function VideoDetail() {
             );
           })}
         </div>
-        <div className="lg:basis-1/3 xl:basis-1/4 2xl:basis-1/4">
+        <div className="lg:basis-1/4 xl:basis-1/4 2xl:basis-1/4">
+          <ul className="RecomendList">
           {recomendList.map((el) => {
             return (
-              <div className="RecomendList" key={el.id.videoId}>
+              <li  key={el.id.videoId}>
                 <img
-                  src={el.snippet.thumbnails.default.url}
+                  src={el.snippet.thumbnails.standard.url}
                   alt={el.snippet.title}
                 />
-              </div>
+                <div className="VideoTitle RecomendDetail">
+                  <h4>{el.snippet.title}</h4>
+                  <h6>{el.snippet.channelTitle}</h6>
+                  <h6>{calculateDate(el.snippet.publishedAt)}</h6>
+                </div>
+              </li>
             );
           })}
+          </ul>
         </div>
       </div>
     </div>

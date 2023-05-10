@@ -10,7 +10,6 @@ export default function VideoList({ keyword, setAppKeyword }) {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const navigate = useNavigate();
-
   const submitForm = (e) => {
     e.preventDefault();
     setAppKeyword(searchKeyword);
