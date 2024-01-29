@@ -1,6 +1,6 @@
 ## 리액트와 유튜브 API를 활용하여 만든 유튜브 클론 사이트입니다.  
   
-[사이트 접속]([https://animated-paletas-7e6e4b.netlify.app])  
+[사이트 접속](https://animated-paletas-7e6e4b.netlify.app)  
 
   
 상단 오른쪽 아이콘을 활용해 다크모드를 구현하였습니다.  
